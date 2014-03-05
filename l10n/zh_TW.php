@@ -1,0 +1,15 @@
+﻿<?php $TRANSLATIONS = array(
+'Server' => 'Server',
+'IP or DNS name of the server where the Joomla database is located (default localhost)' => 'IP or DNS name of the server where the Joomla database is located (default localhost)',
+'User' => 'User',
+'Joomla database user name.' => 'Joomla database user name.',
+'Password' => 'Password',
+'Joomla database user password.' => 'Joomla database user password.',
+'Database' => 'Database',
+'Joomla database.' => 'Joomla database.',
+'Prefix' => 'Prefix',
+'Joomla database table prefix.' => 'Joomla database table prefix.',
+'UserGroup' => 'UserGroup',
+'Only Joomla users from this Joomla user group are allowed loggin to owncloud. If the group is not availabel in owncloud, than it\'s created.' => 'Only Joomla users from this Joomla user group are allowed loggin to owncloud. If the group is not availabel in owncloud, than it\'s created.',
+'Update user data after login?' => 'Update user data after login?',
+);

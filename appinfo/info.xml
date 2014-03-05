@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<info>
+	<id>user_joomla_auth</id>
+	<name>Joomla Authentication Backend</name>
+	<description>Authenticate Users by Joomla</description>
+	<licence>AGPL</licence>
+	<author>Enrico Walther</author>
+	<require>5</require>
+	<types>
+		<authentication/>
+	</types>
+</info>

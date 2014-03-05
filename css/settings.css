@@ -1,0 +1,13 @@
+#user_joomla_auth fieldset p label {
+	width: 20%;
+	max-width: 200px;
+	display: inline-block;
+	vertical-align: top;
+	padding-top: 9px;
+}
+
+#user_joomla_auth fieldset input, #user_joomla_auth fieldset textarea {
+	width: 70%;
+	max-width: 200px;
+	display: inline-block;
+}
