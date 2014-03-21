@@ -148,7 +148,7 @@ class OC_USER_JOOMLA_AUTH extends OC_User_Backend {
 			return false;
 		}
 
-		$db=mysql_select_db($this->joomla_auth_db_database);
+		$db=mysql_select_db($this->joomla_auth_db_database, $con);
 		if($db==false)
 		{
 			OC_Log::write('OC_USER_JOOMLA_AUTH', "Could not found Joomla database ".$this->joomla_auth_db_database."!", OC_Log::ERROR);
