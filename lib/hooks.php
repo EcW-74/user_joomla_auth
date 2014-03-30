@@ -28,15 +28,15 @@ class OC_USER_JOOMLA_AUTH_Hooks {
 		$uid = $params['uid'];
 		$password = $params['password'];
 		$joomla_backend = new OC_USER_JOOMLA_AUTH();
-		
-		if($joomla_backend->db_con)
+
+		if($joomla_backend->db_link)
 		{
 			$joomla_username = joomla_username($joomla_backend, $uid);
 			if($joomla_username)
 			{
 				$joomla_display_name = joomla_display_name($joomla_backend, $uid);
 				$joomla_email = joomla_email($joomla_backend, $uid);
-				
+
 				if (!OC_User::userExists($uid)) {
 					if (preg_match( '/[^a-zA-Z0-9 _\.@\-]/', $uid)) {
 						OC_Log::write('OC_USER_JOOMLA_AUTH','Invalid username "'.$uid.'", allowed chars "a-zA-Z0-9" and "_.@-" ',OC_Log::ERROR);
@@ -82,61 +82,81 @@ class OC_USER_JOOMLA_AUTH_Hooks {
 				}
 			}
 		}
-		
+
 		return true;
 	}
 }
 
 function joomla_username($joomla_backend, $uid)
 {
+	$ret = false;
 	$query="SELECT username FROM ".$joomla_backend->joomla_auth_db_prefix."users WHERE username='".$uid."'";
-	$res = mysql_query($query, $joomla_backend->db_con);
 
-	if($row=mysql_fetch_object($res))
+	if ($res = mysqli_query($joomla_backend->db_link, $query))
 	{
-		return $row->username;
+		if($row=mysql_fetch_object($res))
+		{
+			$ret = $row[0];
+		}
+		/* free result set */
+		mysqli_free_result($res);
 	}
-	
-	return false;
+
+	return $ret;
 }
 
 function joomla_passwordhash($joomla_backend, $uid)
 {
+	$ret = false;
 	$query="SELECT password FROM ".$joomla_backend->joomla_auth_db_prefix."users WHERE username='".$uid."'";
-	$res = mysql_query($query, $joomla_backend->db_con);
 
-	if($row=mysql_fetch_object($res))
+	if ($res = mysqli_query($joomla_backend->db_link, $query))
 	{
-		return explode (':' , $row->password);
+		if($row=mysqli_fetch_row($res))
+		{
+			$ret = explode (':' , $row[0]);
+		}
+		/* free result set */
+		mysqli_free_result($res);
 	}
-	
-	return false;
+
+	return $ret;
 }
 
 function joomla_display_name($joomla_backend, $uid)
 {
+	$ret = false;
 	$query="SELECT name FROM ".$joomla_backend->joomla_auth_db_prefix."users WHERE username='".$uid."'";
-	$res = mysql_query($query, $joomla_backend->db_con);
 
-	if($row=mysql_fetch_object($res))
+	if ($res = mysqli_query($joomla_backend->db_link, $query))
 	{
-		return $row->name;
+		if($row=mysqli_fetch_row($res))
+		{
+			$ret = $row[0];
+		}
+		/* free result set */
+		mysqli_free_result($res);
 	}
-	
-	return false;
+
+	return $ret;
 }
 
 function joomla_email($joomla_backend, $uid)
 {
+	$ret = false;
 	$query="SELECT email FROM ".$joomla_backend->joomla_auth_db_prefix."users WHERE username='".$uid."'";
-	$res = mysql_query($query, $joomla_backend->db_con);
 
-	if($row=mysql_fetch_object($res))
+	if ($res = mysqli_query($joomla_backend->db_link, $query))
 	{
-		return $row->email;
+		if($row=mysqli_fetch_row($res))
+		{
+			$ret = $row[0];
+		}
+		/* free result set */
+		mysqli_free_result($res);
 	}
-	
-	return false;
+
+	return $ret;
 }
 
 function update_mail($uid, $email) {
@@ -155,7 +175,7 @@ function update_groups($uid, $group) {
 			OC_Group::createGroup($group);
 			OC_Log::write('OC_USER_JOOMLA_AUTH','New group created: '.$group, OC_Log::DEBUG);
 		}
-		
+
 		if (!OC_Group::inGroup($uid, $group)) {
 			OC_Group::addToGroup($uid, $group);
 			OC_Log::write('OC_USER_JOOMLA_AUTH','Added "'.$uid.'" to the group "'.$group.'"', OC_Log::DEBUG);
