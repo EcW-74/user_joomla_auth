@@ -73,17 +73,13 @@ class OC_USER_JOOMLA_AUTH extends OC_User_Backend {
 		{
 			if($row = mysqli_fetch_row($res))
 			{
-				$id = $row[0];
-				$username = $row[1];
-				$password = $row[2];
-				$hashparts = explode (':' , $password);
+				$hashparts = explode (':' , $row[2]);
 				$userhash = md5($password.$hashparts[1]);
 				if($hashparts[0]==$userhash)
 				{
-					OC_Log::write('OC_USER_JOOMLA_AUTH','uid 1: '.$username, OC_Log::ERROR);
-					if($this->isUserInGroup($id, $uid))
+					if($this->isUserInGroup($row[0], $uid))
 					{
-						return $username;
+						return $row[1];
 					}
 				}
 				else

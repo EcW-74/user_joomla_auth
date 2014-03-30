@@ -94,7 +94,7 @@ function joomla_username($joomla_backend, $uid)
 
 	if ($res = mysqli_query($joomla_backend->db_link, $query))
 	{
-		if($row=mysql_fetch_object($res))
+		if($row=mysqli_fetch_row($res))
 		{
 			$ret = $row[0];
 		}
