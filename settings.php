@@ -36,7 +36,7 @@ if($_POST) {
 		OC_CONFIG::setValue('user_joomla_auth_db_user', strip_tags($_POST['joomla_db_user']));
 	}
 
-	if(isset($_POST['joomla_db_user'])) {
+	if(isset($_POST['joomla_db_password'])) {
 		OC_CONFIG::setValue('user_joomla_auth_db_password', strip_tags($_POST['joomla_db_password']));
 	}
 
